@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Log-in{% endblock %}
+
+{% block content %}
+    <h1 class='display-3 text-center'>Log-In</h1>
+
+    <form class='form-control' method='POST'>
+        {{form.hidden_tag()}}
+
+        {% for cat,msg in get_flashed_messages(with_categories = true) %}
+            <p class='alert alert-{{cat}}'>{{msg}}</p>
+        {% endfor %}
+
+        {% for field in form if field.widget.input_type != 'hidden' %}
+            <p>
+                {{field.label}}
+                {{field(class_='form-control')}}
+            </p>
+        {% endfor %}
+
+        <button class='btn btn-success'>Log-In</button>
+    </form>
+{% endblock %}

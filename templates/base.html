@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+	crossorigin="anonymous">
+    <link href='/static/style.css' rel='stylesheet'>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <nav class='navbar navbar-expand'>
+            <div class='container-fluid'>
+                <div class="navbar-header">
+                    <a class='navbar-brand text-light' href='/'>Movie App</a>
+                </div>
+                
+                {% if session['user'] %}
+                    <div class='nav navbar-nav navbar-right'>
+                        <button class='btn'>
+                            <a class='nav-link text-light' href='/profile'>Profile</a>
+                        </button>
+                        <button class='btn'>
+                            <a class='nav-link text-light' href='/logout'>Log Out</a>
+                        </button>
+                    </div>
+                {% else %}
+                    <div class='nav navbar-nav navbar-right'>
+                            <button class='btn'>
+                                <a class='nav-link text-light' href='/signup'>Sign Up</a>
+                            </button>
+                        
+                            <button class='btn'>
+                                <a class='nav-link text-light' href='/login'>Log-In</a>
+                            </button>
+                    </div>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main style='padding-bottom: 100px;'>
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class='footer py-3 bg-light fixed-bottom'>
+        <div class="container text-center">
+            <span class='text-muted'>
+                All data supplied by <b>The Movie DB</b>
+            </span>
+            <div>
+                <img style='width:250px;' src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_long_2-9665a76b1ae401a510ec1e0ca40ddcb3b0cfe45f1d51b77a308fea0845885648.svg">
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+	crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+        {% if results %}
+            <h1 class='display-3 text-center'>Search results for <b>{{term}}</b></h1>
+            <div class="row row-cols-4">
+                {% for result in results %}
+                    <div class='col'>
+                        <div class="card" style='width: 18rem; margin-bottom: 15px;'>
+                            {% if result.poster_path %}
+                                <img src='https://image.tmdb.org/t/p/w500{{result.poster_path}}' class='card-img-top'>
+                            {% else %}
+                                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9dI2vOEBq9ApxwOBoucjQHHZW1DWpMdwQgA&usqp=CAU' class='card-img-top'>
+                            {% endif %}    
+                            <div class="card-body">
+                                <h5 class='card-title'>{{result.title}}</h5>
+                                <p class='card-text'>{{result.overview}}</p>
+                                <div class=''>    
+                                    <form method='GET' action='/details/{{result.id}}'>
+                                        <button class='btn btn-outline-primary'>Details</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class='centered text-center'>
+                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTarm8i151nUB_Czgsk6Zmq7fJJs8OSJZBeiA&usqp=CAU'>
+                <h3 class='display-3'>Sorry, no search results available for <b>{{term}}</b></h3>
+            </div>
+        {% endif %}
+{% endblock %}

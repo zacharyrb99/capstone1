@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Seasons{% endblock %}
+
+{% block content %}
+    <h1 class='display-3 text-center'>Seasons for {{results.name}}</h1>
+    
+    <div class='row row-cols-4'>
+        {% for season in seasons %}
+            <div class="col">
+                <div class="card" style='width:18rem; margin-bottom:15px;'>
+                    {% if season.poster_path %}
+                        <img src='https://image.tmdb.org/t/p/w500{{season.poster_path}}' class='card-img-top'> 
+                    {% else %}
+                        <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9dI2vOEBq9ApxwOBoucjQHHZW1DWpMdwQgA&usqp=CAU' class='card-img-top'>
+                    {% endif %}
+                    <div class='card-body'>
+                        <h5 class='card-title'>{{season.season_number}}. {{season.name}}</h5>
+                        <p class='card-text'>
+                            <ul>
+                                {% if season.overview %}
+                                    <li><b>Overview: </b>{{season.overview}}</li>
+                                {% endif %}
+                                <li><b>Air Date: </b>{{season.air_date}}</li>
+                                <li><b>Episodes: </b>{{season.episode_count}}</li>
+                            </ul>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

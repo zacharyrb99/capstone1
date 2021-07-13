@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Details{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class='row'>
+            <h1 class='display-3'>{{results.original_name}}</h1>
+            {% if results.poster_path %}
+                <img src='https://image.tmdb.org/t/p/w500{{results.poster_path}}' class='card-img-top' style='width: 200px; height: 200px;'>
+            {% else %}
+                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9dI2vOEBq9ApxwOBoucjQHHZW1DWpMdwQgA&usqp=CAU' class='card-img-top' style='width: 200px; height: 200px;'>
+            {% endif %}
+        </div>
+
+        <ul>
+            <li><b>Rating</b> - {{results.vote_average}}/10 with {{results.vote_count}} ratings</li>
+            <li><b>Overview</b> - {{results.overview}}</li>
+            <li><b>Genre(s)</b> - {{genres}}</li>
+            <li>
+                <b>Seasons</b> - {{results.number_of_seasons}} <a href='/details/{{id}}/seasons' class='btn btn-outline-primary btn-sm'>Seasons</a>
+            </li>
+            <li><b>Episodes</b> - {{results.number_of_episodes}} Episodes</li>
+        </ul>
+
+        <form method='POST'>
+            {% if not watch_later %}
+                <button class='btn btn-primary' formaction='/details/{{results.id}}/watch-later'>Add to Watch Later</button>
+            {% endif %}
+            {% if not favorites %}
+                <button class='btn btn-primary' formaction='/details/{{results.id}}/favorite'>Add to Favorites</button>
+            {% endif %}
+            <button class='btn btn-primary' formmethod='GET' formaction='/details/{{results.id}}/comment'>Add Comment</button>
+        </form>
+
+        {% for cat,msg in get_flashed_messages(with_categories = true) %}
+            <br>
+            <p class='alert alert-{{cat}}'>{{msg}}</p>
+        {% endfor %}
+
+        <ul class='list-group'>
+            {% for comment in comments %}
+                <li class='list-group-item'>
+                    <h1>{{comment.title}}</h1>
+                    <p>{{comment.content}}</p>
+                    {% if comment.user_id == session['user'] %}
+                        <form method='POST' action='/details/{{results.id}}/comment/remove'>
+                            <button class='btn btn-danger btn-sm'>Delete</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

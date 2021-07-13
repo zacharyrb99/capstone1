@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+    <h1 class='display-3 text-center'> Search for a Movie or TV Show </h1>
+
+    {% for cat,msg in get_flashed_messages(with_categories = true) %}
+        <p class='alert alert-{{cat}}'>{{msg}}</p>
+    {% endfor %}
+
+    <form class='form-control' method='POST' action='/search'>
+        {{form.hidden_tag()}}
+
+        {% for field in form if field.widget.input_type != 'hidden' %}
+            <p>
+                {{field.label}}
+                {{field(class_='form-control')}}
+            </p>
+        {% endfor %}
+
+        <button class='btn btn-success'>Search</button>
+    </form>
+{% endblock %}

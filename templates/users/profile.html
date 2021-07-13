@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <h1 class='display-1 text-center'>User Details</h1>
+        <div class='p-5 mb-4 bg-light rounded-3'>
+            <div class="container-fluid py-5">
+                <h1 class='display-5 fw-bold'>{{user.name}}'s Profile:</h1>
+                <li><b>Username: </b>{{user.username}}</li>
+                <li><b>Email: </b>{{user.email}}</li>
+                <br>
+                <a href='/profile/edit' class='btn btn-warning'>Edit User Details</a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#watchLater">
+                    Watch Later
+                </button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#favorites">
+                    Favorites
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="watchLater" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Watch Later</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for item in user.watch_later %}
+                        <div class="card" style='width: 18rem; margin-bottom: 15px;'>
+                            <img src='https://image.tmdb.org/t/p/w500{{item.poster}}' class='card-img-top'>   
+                            
+                            <div class="card-body">
+                                <h5 class='card-title'>{{item.title}}</h5>
+                                <p class='card-text'>{{item.overview}}</p>
+                                <form method='POST' action='/details/{{item.id}}/watch-later/remove'>
+                                    <!-- <a href='/details/{{item.id}}' class='btn btn-primary'>Details</a> -->
+                                    <button class='btn btn-outline-danger'>Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="favorites" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Favorites</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for item in user.favorites %}
+                        <div class="card" style='width: 18rem; margin-bottom: 15px;'>
+                            <img src='https://image.tmdb.org/t/p/w500{{item.poster}}' class='card-img-top'>   
+                            
+                            <div class="card-body">
+                                <h5 class='card-title'>{{item.title}}</h5>
+                                <p class='card-text'>{{item.overview}}</p>
+                                <form method='POST' action='/details/{{item.id}}/favorite/remove'>
+                                    <!-- <a href='/details/{{item.id}}' class='btn btn-primary'>Details</a> -->
+                                    <button class='btn btn-outline-danger'>Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

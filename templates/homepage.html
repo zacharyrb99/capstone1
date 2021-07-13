@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block content %}
+    {% for cat,msg in get_flashed_messages(with_categories = true) %}
+        <br>
+        <p class='alert alert-{{cat}}'>{{msg}}</p>
+    {% endfor %}
+
+    {% if session['user'] %}
+        <div class='centered'>
+            <h1 class='display-3 text-center'>Search for a Movie or TV Show</h1> <br>
+            <form>
+                <div class="d-grid gap-2">
+                    <button formmethod='GET' formaction='/search' class='btn btn-primary btn-block' type='submit'>Search for a Movie/Show</button>
+                </div>
+            </form>
+        </div>
+    {% else %}
+        <div class='container'>
+            <h1 class='display-1 text-center'>Please sign up or log in</h1>
+        </div>
+    {% endif %}
+{% endblock %}
