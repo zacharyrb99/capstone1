@@ -1,6 +1,6 @@
 # Capstone 1 - Movie API
 __API used for capstone__: [The Movie Database](https://www.themoviedb.org/documentation/api)\
-__Link to app__: [Movie App](https://movie-app-tmdb-api.herokuapp.com/)\
+__Link to app__: [Movie App](https://movie-app-tmdb-api.herokuapp.com/)
 
 ---
 
@@ -17,4 +17,4 @@ __Link to app__: [Movie App](https://movie-app-tmdb-api.herokuapp.com/)\
 ### Stack:
 __Front End__: HTML, CSS\
 __Back End__: Python, Flask, Flask_SQLalchemy, Flask_WTForms\
-__Database__: PostgreSQL\
+__Database__: PostgreSQL
