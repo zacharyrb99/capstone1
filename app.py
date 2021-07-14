@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, session, jsonify
+from flask import Flask, render_template, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 import requests
@@ -64,8 +64,8 @@ def search():
 
 @app.route('/details/<int:id>', methods=['GET'])
 def movie_details(id):
-    query_watch_later = WatchLater.query.filter_by(user_id=session['user'], movie_or_show_id=id, type=session['type']).first()
-    query_favorites = Favorite.query.filter_by(user_id=session['user'], movie_or_show_id=id, type=session['type']).first()
+    query_watch_later = WatchLater.query.filter_by(user_id=session['user'], movie_or_show_id=id, type=session['type']).all()
+    query_favorites = Favorite.query.filter_by(user_id=session['user'], movie_or_show_id=id, type=session['type']).all()
     
     comments = Comment.query.filter_by(movie_or_show_id=id).all()
     if session['type'] == 'movie':
@@ -88,7 +88,7 @@ def movie_details(id):
 
         return render_template('movie_details.html', comments=comments, watch_later=query_watch_later, favorites=query_favorites, results=results, genres=genres_string, budget=budget, revenue=revenue)
     elif session['type'] == 'tv':
-        resp = requests.get(f'{SEARCH_TV_ID}{id}?api_key=7044c73ec9077f9a062f7b1cdeaf0a81&language=en-US')
+        resp = requests.get(f'{SEARCH_TV_ID}{id}?api_key={API_KEY}&language=en-US')
         results = json.loads(resp.text)
 
         genres = results['genres']
@@ -229,8 +229,12 @@ def remove_watch_later(id):
 
 @app.route('/profile')
 def profile():
-    user = User.query.get_or_404(session['user'])
-    return render_template('users/profile.html', user=user)
+    if 'user' in session:
+        user = User.query.get_or_404(session['user'])
+        return render_template('users/profile.html', user=user)
+    else:
+        flash('Must be logged in!', 'danger')
+        return redirect('/')
 
 @app.route('/profile/edit', methods=['GET', 'POST'])
 def edit_profile():
