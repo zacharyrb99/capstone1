@@ -1,7 +1,7 @@
 from unittest import TestCase
 from models import db, User, Movie_or_Show, WatchLater, Favorite, Comment
 from flask import session
-from app import API_KEY, app, do_login, SEARCH_TV_ID
+from app import app, do_login
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///capstone1_test'
 
@@ -162,5 +162,3 @@ class UserViewTestCase(TestCase):
 
             self.assertIn('Delete', s)
             self.assertIn("<h1>Test</h1>", s)
-
-    
