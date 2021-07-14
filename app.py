@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
@@ -9,11 +10,11 @@ from forms import EditUserForm, SearchForm, SignupForm, LoginForm, CommentForm
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///capstone1'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace('://', 'ql://')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-app.config['SECRET_KEY'] = "password"
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'password')
 
 connect_db(app)
 toolbar = DebugToolbarExtension(app)
